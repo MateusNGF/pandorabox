@@ -10,7 +10,7 @@ export default function UploadFilesPage() {
         <div className="container-primary-uploadpage">
             <HeaderComponent />
             <div className="container-upload">
-                <UploadComponent/>
+                <UploadComponent />
             </div>
         </div>
     </>
