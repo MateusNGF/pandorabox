@@ -1,0 +1,27 @@
+/* ProgressBar.css */
+.container-primary-progressbar {
+  display: flex;
+  width: 100%;
+  max-height: 50px;
+}
+.progress-bar {
+  width: 100%;
+  background-color: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  margin: auto 0;
+}
+
+.progress-fill {
+  padding: 5px;
+  background-color: #47FF77;
+  /* Cor do preenchimento */
+  color: #6A32B3;
+  /* Cor do texto dentro da barra */
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  /* Igual à altura da barra para centralizar verticalmente o texto */
+}
