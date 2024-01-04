@@ -1,5 +1,5 @@
 
-import HeaderComponent from "../components/HeaderComponent"
+import HeaderComponent from "../elements/HeaderComponent"
 import UploadComponent from "../components/UploadComponent"
 import "./css/UploadFilesPage.css"
 

@@ -1,20 +1,27 @@
 
 
+.container-primary-dropzone {
+        width: 100%;
+        display: block;
+        justify-content: center;
+}
 
- .container-dropzone-input {
-        border: none;
+.container-dropzone-input {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 3px dashed #E6E6E6;
         background-color: #6A32B3;
         color: #D6CBE5;
         border-radius: 10px;
         word-wrap: break-word;
-        width: 100%;
         font-family: Arial, Helvetica, sans-serif;
-        border-radius: 10px;
-        font-size: 20px;
+        margin-top: 20px;
+        margin-bottom: 3rem;
+        font-size: 25px;
         cursor: pointer;
-        padding: 20px;
-        text-align: center;
-        word-wrap: break-word;
 }
 
 .container-dropzone-input:hover {
@@ -27,11 +34,12 @@
         justify-content: center;
         text-align: center;
         align-content: center;
-        margin-bottom: 20px;
+        margin-bottom: 2rem;
         border-radius: 10px;
         background-color: #6A32B3;
         padding: 20px;
         color: #E6E6E6;
+        box-shadow: 10px 10px 2px 1px #9961e4;
 }
 
 .container-primary-dropzone .card-file-details .header {
@@ -59,7 +67,6 @@
         height:30px;
         text-align: center;
         padding: 10px;
-        box-shadow: inset 8px 8px 10px -5px #E6E6E6;
         background-color: #7f38db;
         border-radius:30px;
 }
@@ -67,7 +74,7 @@
 .container-primary-dropzone .card-file-details .fotter {
         width: 100%;
         display: flex;
-        font-size: 25px;
+        font-size: 20px;
         text-align: center;
 }
 

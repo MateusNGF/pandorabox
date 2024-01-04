@@ -10,10 +10,9 @@ export default function UploadComponent({ }) {
     
     return (
         <div className='container-primary-dropzone'>
+            <DropZoneAndInputFiles callback={setFileSelecteds} />
             {
-                !fileSelecteds ? 
-                    <DropZoneAndInputFiles callback={setFileSelecteds} /> : 
-                    <CardDetails files={fileSelecteds} />
+                fileSelecteds && <CardDetails files={fileSelecteds} />
             }
         </div>
     );
@@ -29,7 +28,7 @@ function DropZoneAndInputFiles({ callback } : iDropZoneAndInputFilesProperties) 
     return (
         <div {...getRootProps()} className='container-dropzone-input'>
             <input {...getInputProps()} />
-            <p>SELECIONE OU JOGUE OS ARQUIVOS</p>
+            SELECIONE OU JOGUE OS ARQUIVOS
         </div>
     )
 
