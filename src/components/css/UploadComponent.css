@@ -12,6 +12,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        text-align: center;
         border: 3px dashed #E6E6E6;
         background-color: #6A32B3;
         color: #D6CBE5;
