@@ -8,10 +8,8 @@ onmessage = async ({ data }: Partial<iWorkerProperties>) => {
   let progress = 0;
   let done = false;
 
-  const form = new FormData();
-  form.append('file', movie);
 
-  const result = await API.uploadSmallMovie(form, {
+  const result = await API.uploadSmallMovie({ file : movie }, {
     onProgress: (qts : number) => {
       progress += qts;
       postMessage({ progress, done })
