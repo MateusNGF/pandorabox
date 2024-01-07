@@ -9,6 +9,7 @@ import ProgressBarComponent from './ProgressBarComponent';
 
 import { formartBytes } from '../../utils/conversor';
 import { iResponseWorker } from '../../services/interfaces/iWorker';
+import InputClipBoardComponent from './InputClipBoardComponent';
 
 
 export default function UploadComponent() {
@@ -32,14 +33,29 @@ interface iDropZoneAndInputFilesProperties {
 }
 
 function DropZoneAndInputMovies({ callback }: iDropZoneAndInputFilesProperties) {
+    const MAX_SIZE_BYTES = 50 * 1024 * 1024
     const { getRootProps, getInputProps } = useDropzone({
         onDrop: callback,
         accept: {
             'video': ['video/*' ],
         },
+        maxSize: MAX_SIZE_BYTES,
         onDropRejected(fileRejections, event) {
             fileRejections.forEach(fileRejection => {
-                toast(`Arquivo ${fileRejection.file.name} do tipo ${fileRejection.file.type} não permitido!`, { type: 'error' })
+                let message = null
+
+                switch (fileRejection.errors[0].code) {
+                    case 'file-too-large':
+                        message = `O arquivo ${fileRejection.file.name} ultrapassa o limite de ${formartBytes(MAX_SIZE_BYTES)}`
+                        break;
+                    case 'file-invalid-type':
+                        message = `O arquivo ${fileRejection.file.name} do tipo ${fileRejection.file.type} não é permitido`
+                        break;
+                    default:
+                        break;
+                }
+
+                toast.error(message)
             })
         },
     });
@@ -58,6 +74,7 @@ interface iCardDetailsProperties {
 
 function CardDetails({ file, index }: iCardDetailsProperties) {
     const [progress, setProgress] = useState<number>(0);
+    const [urlFile, setUrlFile] = useState<string>(null);
 
     useEffect(() => {
         const workerToProcessMovies = new Worker(
@@ -68,18 +85,19 @@ function CardDetails({ file, index }: iCardDetailsProperties) {
         );
     
         workerToProcessMovies.onmessage = async ({ data }: Partial<iResponseWorker>) => {
-            const { done, progress } = data;
+            const { done, progress, url } = data;
             if (done) {
                 // Encerra o worker após a conclusão
                 workerToProcessMovies.terminate();
+                setUrlFile(url);	
             }
 
-            console.log(done, progress)
             setProgress(progress);
         }
         workerToProcessMovies.onerror = (error) => {
             // Trate erros no worker aqui
             console.error('Erro no Worker:', error);
+            toast.error('Erro no Worker:' + error.message)
         }
     
         workerToProcessMovies.postMessage({
@@ -101,7 +119,20 @@ function CardDetails({ file, index }: iCardDetailsProperties) {
             <div className='fotter'>
                 <p>{formartBytes(file.size)}</p>
                 <div className='fotter-progress-bar'>
-                    <ProgressBarComponent progress={progress} />
+                    {
+                        urlFile
+                            ? <InputClipBoardComponent
+                                value={urlFile}
+                                callback={(copy: boolean) => {
+                                    copy
+                                        ? toast.success('Link copiado com sucesso')
+                                        : toast.error('Erro ao copiar o link');
+                                }}
+                            />
+                            : <ProgressBarComponent
+                                progress={progress}
+                            />
+                    }
                 </div>
             </div>
         </div>

@@ -1,13 +1,14 @@
+import './css/InputClipBoardComponent.css';
 import { useRef } from "react";
+import { FaCopy } from "react-icons/fa";
 
 interface Properties {
-    placeholder?: string;
     value?: string;
-    onClick?: Function;
+    callback?: any;
 }
 
 export default function InputClipBoardComponent({
-    placeholder, value, onClick
+    value, callback
 }: Properties) {
 
     const referency = useRef(null);
@@ -16,18 +17,29 @@ export default function InputClipBoardComponent({
         try {
             if (referency.current) {
                 await navigator.clipboard.writeText(referency.current.value);
-                console.log('Texto copiado para a área de transferência.');
+                callback({ copy : true})
             }
         } catch (err) {
             console.error('Erro ao copiar para a área de transferência:', err);
+            callback({ copy : false})
         }
     };
 
 
     return (
-        <div className="container-primary-inputclipboard">
-            <input ref={referency} type="text" value="Texto para copiar" readOnly />
-            <button onClick={handleCopyClick}>Copiar</button>
+        <div className="container-primary-inputclipboard" onClick={handleCopyClick}>
+            <input
+                className='input-clipboard'
+                ref={referency}
+                type="text"
+                value={value}
+                readOnly
+            />
+            <button
+                className="button-copy"
+            >
+                <FaCopy size={20} />
+            </button>
         </div>
     );
 }

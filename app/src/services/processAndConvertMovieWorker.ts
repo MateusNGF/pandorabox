@@ -11,17 +11,19 @@ onmessage = async ({ data }: Partial<iWorkerProperties>) => {
   const form = new FormData();
   form.append('file', movie);
 
-  const result = await API.uploadMoview(form, {
+  const result = await API.uploadSmallMovie(form, {
     onProgress: (qts : number) => {
       progress += qts;
       postMessage({ progress, done })
     },
   })
 
+  done = true
+
   postMessage({ 
-    progress : progress, 
-    done : true, 
-    result 
+    progress, 
+    done, 
+    url : API.makeURLToViewMovie(result.filename) 
   })
 }
 

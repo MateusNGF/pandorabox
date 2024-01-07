@@ -13,5 +13,6 @@ export interface iResponseWorker {
     data : {
         progress : number
         done : boolean
+        url : string
     }
 }
