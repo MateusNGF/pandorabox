@@ -11,7 +11,7 @@ import { diskStorage } from 'multer';
 export class FilesController {
   constructor(private readonly filesService: FilesService) { }
 
-  @Post('/upload')
+  @Post('/small/upload')
   @UseInterceptors(
     FileInterceptor('file', {
       limits: {
