@@ -5,7 +5,8 @@
 
 <br/>
    Este projeto foi desenvolvido objetivando o treinamento e capacitação em habilidades de desenvolvimentos e em conceitos importantes, 
-   tais como : **processamento sob demanda de grandes arquivos**, **codificação e decodificação de videos sob demanda**; **conversão de videos para formato webm**. 
+   tais como : processamento sob demanda de grandes arquivos ; codificação e decodificação de videos sob demanda ; conversão de videos para formato webm . 
+<br/>
 <br/>
 
 <div align="center">
