@@ -1,19 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './css/UploadComponent.css';
+
 
 import { useDropzone } from 'react-dropzone';
 import ProgressBarComponent from './ProgressBarComponent';
 import { formartBytes } from '../utils/conversor';
 import { toast, } from 'react-toastify';
+import { iResponseWorker } from 'utils/processor/interfaces/iWorker';
 
-export default function UploadComponent({ }) {
-    const [fileSelecteds, setFileSelecteds]: [Array<File>, Function] = useState();
+export default function UploadComponent() {
+    const [fileSelecteds, setFileSelecteds] = useState<Array<File>>([]);
 
     return (
         <div className='container-primary-dropzone'>
-            <DropZoneAndInputFiles callback={setFileSelecteds} />
+            <DropZoneAndInputMovies callback={setFileSelecteds} />
             {
-                fileSelecteds && <CardDetails files={fileSelecteds} />
+                fileSelecteds?.map((file, index) => {
+                    return <CardDetails file={file} index={index + 1} />
+                }) ?? null
             }
         </div>
     );
@@ -24,12 +28,11 @@ interface iDropZoneAndInputFilesProperties {
     callback: any
 }
 
-function DropZoneAndInputFiles({ callback }: iDropZoneAndInputFilesProperties) {
+function DropZoneAndInputMovies({ callback }: iDropZoneAndInputFilesProperties) {
     const { getRootProps, getInputProps } = useDropzone({
         onDrop: callback,
         accept: {
-            'image': ['image/jpeg', 'image/png'],
-            'text': ['text/plain', 'text/html']
+            'video': ['video/*' ],
         },
         onDropRejected(fileRejections, event) {
             fileRejections.forEach(fileRejection => {
@@ -39,37 +42,65 @@ function DropZoneAndInputFiles({ callback }: iDropZoneAndInputFilesProperties) {
     });
     return (
         <div {...getRootProps()} className='container-dropzone-input'>
-            <input {...getInputProps()} accept='image/*, text/*, application/*' />
+            <input {...getInputProps()} accept='video/*' />
             <span>SELECIONE OU JOGUE OS ARQUIVOS</span>
         </div>
     )
 }
 
 interface iCardDetailsProperties {
-    files: Array<File>
+    file: File
+    index: number
 }
 
-function CardDetails({ files }: iCardDetailsProperties) {
-    const [progress, setProgress]: [number, (n: number) => void] = useState(0);
+function CardDetails({ file, index }: iCardDetailsProperties) {
+    const [progress, setProgress] = useState<number>(0);
+
+    useEffect(() => {
+        const workerToProcessMovies = new Worker(
+            new URL('../utils/processor/worker', import.meta.url),
+            {
+                type: 'module'
+            }
+        );
+    
+        workerToProcessMovies.onmessage = ({ data }: Partial<iResponseWorker>) => {
+            const { done, progress } = data;
+            if (done) {
+                // Encerra o worker após a conclusão
+                workerToProcessMovies.terminate();
+            }
+
+            console.log(done, progress)
+            setProgress(progress);
+        }
+        workerToProcessMovies.onerror = (error) => {
+            // Trate erros no worker aqui
+            console.error('Erro no Worker:', error);
+        }
+    
+        workerToProcessMovies.postMessage({
+          movie: file,
+        });
+    
+        return () => {
+          // Remova os ouvintes quando o componente for desmontado
+          workerToProcessMovies.terminate();
+        };
+      }, [file]);
 
     return <>
-        {
-            files.map((file, index) => {
-                return (
-                    <div className='card-file-details'>
-                        <div className='header'>
-                            <span className='file-index'>{index + 1}</span>
-                            <span className='file-name'>{file.name}</span>
-                        </div>
-                        <div className='fotter'>
-                            <p>{formartBytes(file.size)}</p>
-                            <div className='fotter-progress-bar'>
-                                <ProgressBarComponent progress={80} />
-                            </div>
-                        </div>
-                    </div>
-                )
-            })
-        }
+        <div className='card-file-details'>
+            <div className='header'>
+                <span className='file-index'>{index}</span>
+                <span className='file-name'>{file.name}</span>
+            </div>
+            <div className='fotter'>
+                <p>{formartBytes(file.size)}</p>
+                <div className='fotter-progress-bar'>
+                    <ProgressBarComponent progress={progress} />
+                </div>
+            </div>
+        </div>
     </>
 }
