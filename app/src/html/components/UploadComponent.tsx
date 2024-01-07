@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react';
 import './css/UploadComponent.css';
 
+import { useState, useEffect } from 'react';
 
-import { useDropzone } from 'react-dropzone';
-import ProgressBarComponent from './ProgressBarComponent';
-import { formartBytes } from '../utils/conversor';
 import { toast, } from 'react-toastify';
-import { iResponseWorker } from 'utils/processor/interfaces/iWorker';
+import { useDropzone } from 'react-dropzone';
+
+import ProgressBarComponent from './ProgressBarComponent';
+
+import { formartBytes } from '../../utils/conversor';
+import { iResponseWorker } from '../../services/interfaces/iWorker';
+
 
 export default function UploadComponent() {
     const [fileSelecteds, setFileSelecteds] = useState<Array<File>>([]);
@@ -58,13 +61,13 @@ function CardDetails({ file, index }: iCardDetailsProperties) {
 
     useEffect(() => {
         const workerToProcessMovies = new Worker(
-            new URL('../utils/processor/worker', import.meta.url),
+            new URL('../../services/processAndConvertMovieWorker', import.meta.url),
             {
                 type: 'module'
             }
         );
     
-        workerToProcessMovies.onmessage = ({ data }: Partial<iResponseWorker>) => {
+        workerToProcessMovies.onmessage = async ({ data }: Partial<iResponseWorker>) => {
             const { done, progress } = data;
             if (done) {
                 // Encerra o worker após a conclusão
