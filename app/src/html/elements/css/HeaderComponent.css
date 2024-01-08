@@ -1,7 +1,14 @@
 .container-primary-header {
     width: 100%;
-    padding-bottom: 20px;
-    padding-top: 20px;
     display: flex;
     justify-content: center;
+    align-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.container-primary-header img {
+    max-width: 100%;
+    height: auto;
 }
