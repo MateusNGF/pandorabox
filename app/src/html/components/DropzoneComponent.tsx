@@ -1,17 +1,17 @@
 import { useDropzone } from "react-dropzone";
 import { formartBytes } from "utils/conversor";
 
-import  './css/DropzoneComponent.css'
+import './css/DropzoneComponent.css';
 
 interface iDropZoneAndInputFilesProperties {
-    onError: ({message}) => void
+    onError: ({ message }) => void
     onDrop: any
-    title : string
-    maxSizeBytes ?: number
+    title: string
+    maxSizeBytes?: number
 }
 
 export default function DropZoneAndInputMovies({
-    onDrop, onError, 
+    onDrop, onError,
     title,
     maxSizeBytes = 50 * 1024 * 1024
 }: iDropZoneAndInputFilesProperties) {
@@ -45,7 +45,7 @@ export default function DropZoneAndInputMovies({
     });
     return (
         <div {...getRootProps()} className='container-dropzone-input'>
-            <input {...getInputProps()}/>
+            <input {...getInputProps()} />
             <span>{title}</span>
         </div>
     )
