@@ -27,7 +27,7 @@ export default function UploadFilesPage() {
                                     file={file}
                                     index={index + 1}
                                     onError={({message}) => toast.error(message)}
-                                    onAction={({message}) => toast.success(message)}
+                                    onSucess={({message}) => toast.success(message)}
                                     onFinish={({message}) => toast.success(message)}
                                 />
                             ))

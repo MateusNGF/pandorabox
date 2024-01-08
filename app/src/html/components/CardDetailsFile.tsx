@@ -10,12 +10,12 @@ interface iCardDetailsProperties {
     file: File
     index: number,
     onError: ({ message }) => void
-    onAction: ({ message }) => void
+    onSucess: ({ message }) => void
     onFinish: ({ message }) => void
 }
 
 export default function CardDetailsFile({
-    file, index, onError, onAction, onFinish
+    file, index, onError, onSucess, onFinish
 }: iCardDetailsProperties) {
 
     const [progress, setProgress] = useState<number>(0);
@@ -72,7 +72,7 @@ export default function CardDetailsFile({
                                 value={urlFile}
                                 callback={(copy: boolean) => {
                                     copy
-                                        ? onAction({ message: 'Link copiado com sucesso!' })
+                                        ? onSucess({ message: 'Link copiado com sucesso!' })
                                         : onError({ message: 'Erro ao copiar o link!' });
                                 }}
                             />
