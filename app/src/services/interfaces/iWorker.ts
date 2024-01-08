@@ -5,7 +5,7 @@ export interface iWorkerProperties {
 
 export namespace iWorkerProperties {
     export interface DataProperties {
-        movie : File
+        file : File
     }
 }
 
