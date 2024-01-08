@@ -1,0 +1,58 @@
+.card-file-details {
+        justify-content: center;
+        text-align: center;
+        align-content: center;
+        margin-bottom: 2rem;
+        border-radius: 10px;
+        background-color: #6A32B3;
+        padding: 20px;
+        color: #E6E6E6;
+        box-shadow: 10px 10px 2px 1px #9961e4;
+}
+
+.card-file-details .header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 30px;
+        font-weight: bolder;
+        text-align: center;
+        align-items: center;
+}
+
+.card-file-details .header span {
+        align-items: center;
+        justify-content: center ;
+        display: flex;
+}
+
+.card-file-details .header .file-name {
+        width: 100%;
+}
+
+.card-file-details .header .file-index {
+        width:30px;
+        height:30px;
+        text-align: center;
+        padding: 10px;
+        background-color: #7f38db;
+        border-radius:30px;
+}
+
+.card-file-details .fotter {
+        width: 100%;
+        display: flex;
+        font-size: 20px;
+        text-align: center;
+}
+
+.card-file-details .fotter p {
+        width: 20%;
+        font-weight: 800;
+}
+
+.card-file-details .fotter-progress-bar {
+        width: 80%;
+        justify-content: center;
+        margin: auto 0;
+}
