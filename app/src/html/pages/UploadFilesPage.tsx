@@ -28,7 +28,7 @@ export default function UploadFilesPage() {
                                     index={index + 1}
                                     onError={({message}) => toast.error(message)}
                                     onAction={({message}) => toast.success(message)}
-                                    onFinish={() => toast.success(`${index + 1}º Arquivo processado com sucesso!`)}
+                                    onFinish={({message}) => toast.success(message)}
                                 />
                             ))
                             : null

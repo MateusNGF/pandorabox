@@ -11,7 +11,7 @@ interface iCardDetailsProperties {
     index: number,
     onError: ({ message }) => void
     onAction: ({ message }) => void
-    onFinish: () => void
+    onFinish: ({ message }) => void
 }
 
 export default function CardDetailsFile({
@@ -35,7 +35,9 @@ export default function CardDetailsFile({
                 // Encerra o worker após a conclusão
                 workerToProcessMovies.terminate();
                 setUrlFile(url);
-                onFinish()
+                onFinish({
+                    message: `Arquivo ${index}º concluído com sucesso!`
+                })
             }
 
             setProgress(progress);
@@ -47,9 +49,7 @@ export default function CardDetailsFile({
             })
         }
 
-        workerToProcessMovies.postMessage({
-            movie: file,
-        });
+        workerToProcessMovies.postMessage({file});
 
         return () => {
             // Remova os ouvintes quando o componente for desmontado
