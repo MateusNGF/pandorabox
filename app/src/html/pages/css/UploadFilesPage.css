@@ -3,6 +3,10 @@
 }
 
 .container-primary-uploadpage .container-upload{
-    max-width: 70%;
+    max-width: 80%;
+    display: block;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
     margin: 0 auto;
 }

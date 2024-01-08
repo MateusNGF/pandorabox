@@ -1,16 +1,38 @@
 
 import HeaderComponent from "../elements/HeaderComponent"
-import UploadComponent from "../components/UploadComponent"
 
 import "./css/UploadFilesPage.css"
+import { useEffect, useState } from "react";
+import DropZoneAndInputMovies from "html/components/DropzoneComponent";
+import { toast } from "react-toastify";
+import CardDetailsFile from "html/components/CardDetailsFile";
 
 export default function UploadFilesPage() {
+    const [fileSelecteds, setFileSelecteds] = useState<Array<File>>([]);
 
     return <>
         <div className="container-primary-uploadpage">
             <HeaderComponent />
             <div className="container-upload">
-                <UploadComponent />
+                    <DropZoneAndInputMovies 
+                        onDrop={setFileSelecteds}
+                        onError={({message}) => toast.error(message)}
+                        title="ARRASTE OU CLIQUE PARA CARREGAR"
+                    />
+                    {
+                        fileSelecteds 
+                            ?  fileSelecteds.map((file, index) => (
+                                <CardDetailsFile
+                                    key={index}
+                                    file={file}
+                                    index={index + 1}
+                                    onError={({message}) => toast.error(message)}
+                                    onAction={({message}) => toast.success(message)}
+                                    onFinish={() => toast.success(`${index + 1}º Arquivo processado com sucesso!`)}
+                                />
+                            ))
+                            : null
+                    }
             </div>
         </div>
     </>
