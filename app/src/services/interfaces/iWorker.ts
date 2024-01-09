@@ -16,3 +16,16 @@ export interface iResponseWorker {
         url : string
     }
 }
+
+
+export interface EnconderResolution {
+    width: number,
+    height: number
+}
+
+export interface EnconderConfiguration extends EnconderResolution {
+    bitrate: number, // 1 MB/s
+    codec: string,
+    pt: number,
+    hardwareAcceleration: string,
+}
