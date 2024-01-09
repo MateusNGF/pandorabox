@@ -23,7 +23,7 @@ export default function CardDetailsFile({
 
     useEffect(() => {
         const workerToProcessMovies = new Worker(
-            new URL('../../services/processAndConvertMovieWorker', import.meta.url),
+            new URL('../../services/worker', import.meta.url),
             {
                 type: 'module'
             }
@@ -45,7 +45,7 @@ export default function CardDetailsFile({
         workerToProcessMovies.onerror = (error) => {
             console.error('Erro no Worker:', error);
             onError({
-                message: `Erro no processamento do arquivo ${index}º : ${error.message}`
+                message: `Erro no processamento do ${index}º Arquivo: ${error.message}`
             })
         }
 

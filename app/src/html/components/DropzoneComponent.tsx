@@ -8,19 +8,19 @@ interface iDropZoneAndInputFilesProperties {
     onDrop: any
     title: string
     maxSizeBytes?: number
+    accept?: { [key : string] : Array<string> }
 }
 
 export default function DropZoneAndInputMovies({
     onDrop, onError,
     title,
-    maxSizeBytes = 50 * 1024 * 1024
+    maxSizeBytes = 2000 * 1024 * 1024,
+    accept = { 'video': ['video/mp4'] }
 }: iDropZoneAndInputFilesProperties) {
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop: onDrop,
-        accept: {
-            'video': ['video/*'],
-        },
+        accept: accept,
         maxSize: maxSizeBytes,
         onDropRejected(fileRejections, event) {
             fileRejections.forEach(fileRejection => {
@@ -31,8 +31,9 @@ export default function DropZoneAndInputMovies({
                         })
                         break;
                     case 'file-invalid-type':
+                        const typesAccepteds = Object.values(accept).map((types) => types.join(', '))
                         onError({
-                            message: `O arquivo ${fileRejection.file.name} do tipo ${fileRejection.file.type} não é permitido`
+                            message: `Arquivo ${fileRejection.file.name} não aceito. Tipos permitidos : ${typesAccepteds}.`
                         })
                         break;
                     default:
