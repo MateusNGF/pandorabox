@@ -1,41 +1,11 @@
-import { EnconderResolution, iWorkerProperties } from "./interfaces/iWorker";
-
-import { API } from './ApiServices'
+import { CanvasRender } from "./CanvasRender";
+import { iWorkerProperties } from "./interfaces/iWorker";
 
 import VideoProcessor from "./VideoProcessor";
-import { MP4Demuxer as MP4Demuxer } from "./VideoTransform/MP4Demuxer";
+import { MP4Demuxer } from "./VideoTransform/MP4Demuxer";
 
 onmessage = async ({ data }: Partial<iWorkerProperties>) => {
-  const { file } = data;
-
-  await transformToLowResolution(file)
-
-
-  // 1º Transformar para baixa resolução
-
-  // let progress = 0;
-  // let done = false;
-
-
-  // const result = await API.uploadSmallMovie({ file }, {
-  //   onProgress: (qts : number) => {
-  //     progress += qts;
-  //     postMessage({ progress, done })
-  //   },
-  // })
-
-  // done = true
-
-  // postMessage({ 
-  //   progress, 
-  //   done, 
-  //   url : API.makeURLToViewMovie(result.filename) 
-  // })
-}
-
-
-
-async function transformToLowResolution(file: File) {
+  const { file, canvas } = data;
 
   const constraint = {
     qvga: { width: 320, height: 240 },
@@ -59,10 +29,12 @@ async function transformToLowResolution(file: File) {
   }
 
   const videoTransform = new MP4Demuxer();
+  const canvasRender = new CanvasRender(canvas)
   const videoProcessor = new VideoProcessor(videoTransform);
 
   await videoProcessor.start({
     file,
+    renderFrame : canvasRender.getRenderer(),
     encode: {
       ...enconderConfig.webm,
       ...constraint.vga

@@ -1,4 +1,3 @@
-
 export interface iWorkerProperties {
     data: iWorkerProperties.DataProperties
 }
@@ -6,6 +5,7 @@ export interface iWorkerProperties {
 export namespace iWorkerProperties {
     export interface DataProperties {
         file : File
+        canvas : OffscreenCanvas
     }
 }
 

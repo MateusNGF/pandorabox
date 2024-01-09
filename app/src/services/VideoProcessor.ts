@@ -8,7 +8,7 @@ export default class VideoProcessor {
         private readonly videoTransform : iVideoTransform
     ) {}
 
-    async start({ file, encode} : iVideoProcessor.iFunctionStartProperties){
+    async start({ file, encode, renderFrame} : iVideoProcessor.iFunctionStartProperties){
         const stream = file.stream()
         const filename = file.name.split('.')[0];
 
@@ -16,7 +16,7 @@ export default class VideoProcessor {
         .pipeTo(
             new WritableStream({
                 write(frame : VideoFrame){
-                    debugger
+                    renderFrame(frame)
                 }
             })
         )
@@ -61,6 +61,6 @@ export namespace iVideoProcessor {
     export interface iFunctionStartProperties {
         file : File,
         encode : EnconderConfiguration,
-        renderFrame : HTMLCanvasElement
+        renderFrame : (frame : VideoFrame) => void
     }
 }

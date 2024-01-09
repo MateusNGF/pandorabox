@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { iResponseWorker } from "services/interfaces/iWorker";
 import { formartBytes } from "utils/conversor";
 import InputClipBoardComponent from "./InputClipBoardComponent";
@@ -19,8 +19,9 @@ export default function CardDetailsFile({
 }: iCardDetailsProperties) {
 
     const [progress, setProgress] = useState<number>(0);
-    const [urlFile, setUrlFile] = useState<string>(null);
-
+    const [urlFile, setUrlFile] = useState<string>(null);    
+    const canvasPreview = useRef<HTMLCanvasElement>();
+    
     useEffect(() => {
         const workerToProcessMovies = new Worker(
             new URL('../../services/worker', import.meta.url),
@@ -49,18 +50,33 @@ export default function CardDetailsFile({
             })
         }
 
-        workerToProcessMovies.postMessage({file});
+        try {
+            const canvasOffscreen = canvasPreview?.current && canvasPreview.current?.transferControlToOffscreen()
+            workerToProcessMovies.postMessage({
+                file,
+                canvas: canvasOffscreen
+            }, [canvasOffscreen]);
+        }catch(error){
+            console.log(error)
+            onError({
+                message: `Erro no processamento do ${index}º Arquivo: Tente novamente!`
+            })
+        }   
 
         return () => {
             // Remova os ouvintes quando o componente for desmontado
             workerToProcessMovies.terminate();
         };
-    }, [file]);
+    }, []);
 
     return <>
         <div className='card-file-details'>
             <div className='header'>
                 <span className='file-index'>{index}</span>
+                <canvas 
+                    ref={canvasPreview}
+                    className="canvas-preview"
+                />
                 <span className='file-name'>{file.name}</span>
             </div>
             <div className='fotter'>
