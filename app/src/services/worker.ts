@@ -36,8 +36,8 @@ onmessage = async ({ data }: Partial<iWorkerProperties>) => {
     file,
     renderFrame : canvasRender.getRenderer(),
     encode: {
-      ...enconderConfig.webm,
-      ...constraint.vga
+      ...enconderConfig.mp4,
+      ...constraint.qvga
     }
   })
 }

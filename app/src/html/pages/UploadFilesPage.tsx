@@ -20,7 +20,7 @@ export default function UploadFilesPage() {
                         title="ARRASTE OU CLIQUE PARA CARREGAR"
                     />
                     {
-                        fileSelecteds 
+                        fileSelecteds.length
                             ?  fileSelecteds.map((file, index) => (
                                 <CardDetailsFile
                                     key={index}

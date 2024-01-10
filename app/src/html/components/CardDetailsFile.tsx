@@ -3,6 +3,12 @@ import { iResponseWorker } from "services/interfaces/iWorker";
 import { formartBytes } from "utils/conversor";
 import InputClipBoardComponent from "./InputClipBoardComponent";
 import ProgressBarComponent from "./ProgressBarComponent";
+import { RxLapTimer } from "react-icons/rx";
+import { PiIdentificationBadgeThin } from "react-icons/pi";
+import { AiOutlineOrderedList } from "react-icons/ai";
+import { BsMemory } from "react-icons/bs";
+
+
 
 import './css/CardDetailsFile.css';
 
@@ -72,15 +78,17 @@ export default function CardDetailsFile({
     return <>
         <div className='card-file-details'>
             <div className='header'>
-                <span className='file-index'>{index}</span>
                 <canvas 
                     ref={canvasPreview}
                     className="canvas-preview"
                 />
-                <span className='file-name'>{file.name}</span>
+                <div className="information">
+                    <span><AiOutlineOrderedList />Posição: {index}</span><br/>
+                    <span><PiIdentificationBadgeThin />Nome: {file.name}</span><br/>
+                    <span><BsMemory/>Tamanho: {formartBytes(file.size)}</span>
+                </div>
             </div>
             <div className='fotter'>
-                <p>{formartBytes(file.size)}</p>
                 <div className='fotter-progress-bar'>
                     {
                         urlFile
@@ -97,6 +105,7 @@ export default function CardDetailsFile({
                             />
                     }
                 </div>
+                <span><RxLapTimer/> 20s </span>
             </div>
         </div>
     </>
