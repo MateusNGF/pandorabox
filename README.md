@@ -17,6 +17,7 @@
 
 # VERSÕES
  sendo cada versão alguma implementação grande e expressiva dentro do sistema
+ - **master** - Esta versão é  a principal e contem a ultima versão lançada.
  - **V1.0 (<a href="https://github.com/MateusNGF/pandorabox/pull/new/version-one" target="_blank" >version-one</a>)** - Esta versão se rêfere-se a primeira etapa e mais alguns ajustes secundários.
  - **V2.0 (<a href="https://github.com/MateusNGF/pandorabox/pull/new/version-two" target="_blank" >version-two</a>)** - Esta versão se refere-se a segunda etapa e mais alguns ajustes secundários.
 
