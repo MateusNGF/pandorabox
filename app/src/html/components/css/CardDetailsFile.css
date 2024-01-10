@@ -1,0 +1,73 @@
+.card-file-details {
+        justify-content: center;
+        text-align: center;
+        align-content: center;
+        margin-bottom: 2rem;
+        border-radius: 10px;
+        background-color: #6A32B3;
+        padding: 20px;
+        color: #E6E6E6;
+        box-shadow: 10px 10px 2px 1px #9961e4;
+}
+
+.card-file-details .header {
+        width: 100%;
+        display: flex;
+        font-size: 30px;
+        overflow: hidden;
+        justify-content: center;
+        font-weight: bolder;
+        text-align: center;
+        align-items: center;
+        gap: 20px;
+}
+
+
+.card-file-details .header .canvas-preview {
+        max-width: 300px;
+        max-height: 300px;
+}
+
+.card-file-details .header .information {
+        width: 100%;
+        display: block;
+        width: 100%;
+        text-align: left;
+}
+
+.card-file-details .header .information span {
+        text-align: center;
+        justify-content: center;
+        align-self: center;
+        align-items: center;
+        font-size: 30px;
+}
+
+
+.card-file-details .fotter {
+        width: 100%;
+        display: flex;
+        margin-top: 20px;
+        font-size: 20px;
+        text-align: center;
+        align-items: center;
+        align-self: center;
+        justify-content: space-between;
+        gap: 10px;
+}
+
+.card-file-details .fotter span {
+        align-items: center;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        align-self: center;
+        gap: 1px;
+}
+
+
+.card-file-details .fotter-progress-bar {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+}
