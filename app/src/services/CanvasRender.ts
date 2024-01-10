@@ -23,12 +23,10 @@ export class CanvasRender {
     getRenderer() { 
         const renderer = this
 
-        debugger
         let peddingFrame : VideoFrame = null
 
         // tecnica para renderizar mais rapido
         return (frame : VideoFrame) => {
-            debugger
             if (!peddingFrame){
 
                 // https://developer.mozilla.org/pt-BR/docs/Web/API/window/requestAnimationFrame
