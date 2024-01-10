@@ -18,14 +18,10 @@ export interface iResponseWorker {
 }
 
 
-export interface EnconderResolution {
-    width: number,
-    height: number
+export type TypesConfigurationEnconder = {
+    [key in string] : Partial<VideoEncoderConfig>
 }
 
-export interface EnconderConfiguration extends EnconderResolution {
-    bitrate: number, // 1 MB/s
-    codec: string,
-    pt: number,
-    hardwareAcceleration: string,
+export type ResolutionsTypes = {
+    [key in string] : { width : number, height : number}
 }

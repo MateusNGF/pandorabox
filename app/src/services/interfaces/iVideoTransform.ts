@@ -6,13 +6,13 @@ export abstract class iVideoTransform {
 export namespace iVideoTransform {
     export interface iFunctionRunProperties {
         stream : ReadableStream,
-        mimetype : string,
-        encode : any,
+        mimetype ?: string,
+        encode ?: any,
         listiners : iVideoTransform.TransformListiners
     }
 
     export interface TransformListiners {
-        onConfig : (config : object) => any
+        onConfig : (config : VideoDecoderConfig) => any
         onFrames : (chunk : any) => any
     }
 }
