@@ -39,3 +39,11 @@ As etapas Abaixo estão listadas algumas etapas prevista que vão direcionar o d
 - https://www.npmjs.com/package/mp4box
 - https://github.com/gpac/mp4box.js/blob/HEAD/test/node/info.js
 - https://www.npmjs.com/package/webm-writer
+- UseEffect chamando duas vezes e dando problemas no canvas
+  - https://stackoverflow.com/questions/60618844/react-hooks-useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-ar
+
+- VideoEnconder e novas API não tipadas no tsc
+  - https://stackoverflow.com/questions/73175259/cannot-find-name-audiodecoder
+
+- Alguns videos para que possa baixar e testar
+  - https://gist.github.com/jsturgis/3b19447b304616f18657
