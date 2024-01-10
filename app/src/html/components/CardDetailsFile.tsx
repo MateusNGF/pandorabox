@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { iResponseWorker } from "services/interfaces/iWorker";
 import { formartBytes } from "utils/conversor";
 import InputClipBoardComponent from "./InputClipBoardComponent";
 import ProgressBarComponent from "./ProgressBarComponent";
+import { RxLapTimer } from "react-icons/rx";
+import { PiIdentificationBadgeThin } from "react-icons/pi";
+import { AiOutlineOrderedList } from "react-icons/ai";
+import { BsMemory } from "react-icons/bs";
+
+
 
 import './css/CardDetailsFile.css';
 
@@ -19,11 +25,12 @@ export default function CardDetailsFile({
 }: iCardDetailsProperties) {
 
     const [progress, setProgress] = useState<number>(0);
-    const [urlFile, setUrlFile] = useState<string>(null);
-
+    const [urlFile, setUrlFile] = useState<string>(null);    
+    const canvasPreview = useRef<HTMLCanvasElement>();
+    
     useEffect(() => {
         const workerToProcessMovies = new Worker(
-            new URL('../../services/processAndConvertMovieWorker', import.meta.url),
+            new URL('../../services/worker', import.meta.url),
             {
                 type: 'module'
             }
@@ -45,26 +52,43 @@ export default function CardDetailsFile({
         workerToProcessMovies.onerror = (error) => {
             console.error('Erro no Worker:', error);
             onError({
-                message: `Erro no processamento do arquivo ${index}º : ${error.message}`
+                message: `Erro no processamento do ${index}º Arquivo: ${error.message}`
             })
         }
 
-        workerToProcessMovies.postMessage({file});
+        try {
+            const canvasOffscreen = canvasPreview?.current && canvasPreview.current?.transferControlToOffscreen()
+            workerToProcessMovies.postMessage({
+                file,
+                canvas: canvasOffscreen
+            }, [canvasOffscreen]);
+        }catch(error){
+            console.log(error)
+            onError({
+                message: `Erro no processamento do ${index}º Arquivo: Tente novamente!`
+            })
+        }   
 
         return () => {
             // Remova os ouvintes quando o componente for desmontado
             workerToProcessMovies.terminate();
         };
-    }, [file]);
+    }, []);
 
     return <>
         <div className='card-file-details'>
             <div className='header'>
-                <span className='file-index'>{index}</span>
-                <span className='file-name'>{file.name}</span>
+                <canvas 
+                    ref={canvasPreview}
+                    className="canvas-preview"
+                />
+                <div className="information">
+                    <span><AiOutlineOrderedList />Posição: {index}</span><br/>
+                    <span><PiIdentificationBadgeThin />Nome: {file.name}</span><br/>
+                    <span><BsMemory/>Tamanho: {formartBytes(file.size)}</span>
+                </div>
             </div>
             <div className='fotter'>
-                <p>{formartBytes(file.size)}</p>
                 <div className='fotter-progress-bar'>
                     {
                         urlFile
@@ -81,6 +105,7 @@ export default function CardDetailsFile({
                             />
                     }
                 </div>
+                <span><RxLapTimer/> 20s </span>
             </div>
         </div>
     </>
