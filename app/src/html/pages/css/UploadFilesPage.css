@@ -1,5 +1,6 @@
 .container-primary-uploadpage {
     display: block;
+    height: 100vh;
 }
 
 .container-primary-uploadpage .container-upload{

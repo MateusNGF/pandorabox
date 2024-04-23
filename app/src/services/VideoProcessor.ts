@@ -1,6 +1,4 @@
 import { iVideoTransform } from "./interfaces/iVideoTransform";
-import { EnconderConfiguration } from "./interfaces/iWorker";
-
 
 export default class VideoProcessor {
 
@@ -60,7 +58,7 @@ export default class VideoProcessor {
 export namespace iVideoProcessor {
     export interface iFunctionStartProperties {
         file : File,
-        encode : EnconderConfiguration,
+        encode : VideoEncoderConfig,
         renderFrame : (frame : VideoFrame) => void
     }
 }
